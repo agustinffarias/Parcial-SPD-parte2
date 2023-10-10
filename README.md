@@ -3,6 +3,7 @@ Santiago DECIBE - Tomas Agustin FARIAS
 
 # Link de tinkercad parte 2:
 https://www.tinkercad.com/things/dGNinya2tob-con-sensor-de-temperatura/editel?sharecode=7RmI-q71zYKV9LyrGuB_Ndgmlrxn2aZJloYqPpmNbSg
+# MAPA:
 ![Tinkercad] (imagenes/imagen_proyecto2.pdf)
 # Descripcion del programa:
 El siguiente programa tiene la funcion de, que cuando el deslizante se encuentre con el valor 0, el motor girara hacia el lado izquierdo, asi mismo, por consola se printearan los grados representados en CELCIUS, y en el 7
