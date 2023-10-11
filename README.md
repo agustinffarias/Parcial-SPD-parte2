@@ -7,6 +7,8 @@ https://www.tinkercad.com/things/dGNinya2tob-con-sensor-de-temperatura/editel?sh
 # Diagrama del circuito:
 ![Tinkercad](/imagenes/Parcialparte3.1.jpg)
 ![Tinkercad](/imagenes/Parcialparte3.2.jpg)
+# Cambios con respecto a la parte2:
+Los cambios con respecto a la parte dos son que, se agrego una fotorresistencia, un led y dos resistencias. Esto cumple la funcionalidad de dar aviso de precaucion cuando el programa este trabajando a altas temperaturas, esto aprovechando que, en el parcial parte 2 pude agregar un sensor de temperatura, entonces, cuando el usuario de forma manual controle la temperatura simulando un entorno de trabajo real el sistema pueda detectar que, le podria producir fallas y, tanto por consola con un mensaje, como de forma visual encendiendo el led, el usuario podria tomar conocimiento de dicho dato. 
 
 # Descripcion: 
 El siguiente programa cumple la funcion de medir la temperatura con un sensor de temperatura, en el caso de que la temperatura sea mayor a 50°Centigrador, la fotorresistencia entra en accion encendiendo un led para avisar que el sistema podria fallar, asi mismo, printea por consola que la temperatura podria ocacionar problemas o quemar el circuito.
