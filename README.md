@@ -2,24 +2,26 @@
 FARIAS TOMAS AGUSTIN
 
 # Link del proyecto Parte 3:
-https://www.tinkercad.com/things/dGNinya2tob-con-sensor-de-temperatura/editel?sharecode=7RmI-q71zYKV9LyrGuB_Ndgmlrxn2aZJloYqPpmNbSg
+https://www.tinkercad.com/things/dGNinya2tob-parcial-parte3/editel?sharecode=7RmI-q71zYKV9LyrGuB_Ndgmlrxn2aZJloYqPpmNbSg
 
 # Diagrama del circuito:
 ![Tinkercad](/imagenes/Parcialparte3.1.jpg)
 ![Tinkercad](/imagenes/Parcialparte3.2.jpg)
-# Cambios con respecto a la parte2:
-Los cambios con respecto a la parte dos son que, se agrego una fotorresistencia, un led y dos resistencias. Esto cumple la funcionalidad de dar aviso de precaucion cuando el programa este trabajando a altas temperaturas, esto aprovechando que, en el parcial parte 2 pude agregar un sensor de temperatura, entonces, cuando el usuario de forma manual controle la temperatura simulando un entorno de trabajo real el sistema pueda detectar que, le podria producir fallas y, tanto por consola con un mensaje, como de forma visual encendiendo el led, el usuario podria tomar conocimiento de dicho dato. 
+# Cambios con respecto a la parte3:
+En esta parte del parcial me toco cambiar la funcion de numeros primos por una funcion que muestre los numeros pares, esto segun mi ultimo numero de documento. 
+
+El unico cambio con respecto a la parte 3 es que, en este nuevo codigo cambie la funcion de retornar los numeros primos por los numeros pares lo cual fue muy sencillo ya que use un return que muestre todos los numeros del contador que divididos por 2 den resto cero, para ello use la siguiente formula : return (contador % == 0)
 
 # Descripcion: 
 El siguiente programa cumple la funcion de medir la temperatura con un sensor de temperatura, en el caso de que la temperatura sea mayor a 50°Centigrador, la fotorresistencia entra en accion encendiendo un led para avisar que el sistema podria fallar, asi mismo, printea por consola que la temperatura podria ocacionar problemas o quemar el circuito.
 Misma tecitura para cuando el estado del deslizante esta en FAHRENHEITS, pero en este caso, la temperatura debe ser mayor a 122°FAHRENHEIT ya que es el equivalente a 50°Centigrados. La luz LED cumple la funcion de poder dar una alerta visual al operador. 
 En cuanto a los 7segmentos siguen cumpliendo la misma funcion de un comienzo, cuando el deslizante se encuentra en 0 el motor girara hacia la izquierda, al mismo tiempo que printea por consola los grados FAHRENHEIT y el 7 segmentos muestra un contador ascendente del 0 al 99 escalando de 1 en 1.
-Si el deslizante se encotrara retornando el valor 1, el motor girara hacia la derecha, printeando por consola los grados CELCIUS, el 7 segmentos mostrara de forma ascendente los numeros primos del 0 al 99.
+Si el deslizante se encotrara retornando el valor 1, el motor girara hacia la derecha, printeando por consola los grados CELCIUS, el 7 segmentos mostrara de forma ascendente los numeros pares del 0 al 99.
 
 # Descripcion de las funciones:
 // DEFINIMOS EN QUE LUGAR ESTARAN CONECTADOS LOS ELEMENTOS
 // DENTRO DEL ARDUINO UNO (EN QUE PIN) 
-#define LED 4
+#define LED 2
 #define FOTORRESISTENCIA A1
 #define A 10
 #define B 11
@@ -60,7 +62,7 @@ void setup()
 // DENTRO DEL LOOP PRIMERO LLAMAMOS A LAS VARIABLES QUE USAREMOS.
 // LUEGO, MEDIANTE UN IF PREGUNTAMOS SI LA LECTURA ES = 0 O = 1, 
 //DEPENDIENDO DE ESTA LECTURA, EL CONTADOR MOSTRARA LA FUNCION DE
-// NUMEROS PRIMOS, O MOSTRARA UN CONTADOR DE LOS SEGUNDOS.
+// NUMEROS PARES, O MOSTRARA UN CONTADOR DE LOS SEGUNDOS.
 // ASI MISMO, TAMBIEN DEPENDIENDO DEL ESTADO DEL DESLIZANTE, 
 // EL MOTOR GIRARA EN UN SENTIDO U EN OTRO, DEPENDIENDO QUE NUMEROS
 // ESTE MOSTRANDO.
@@ -94,12 +96,12 @@ void loop()
       int girar_derecha=digitalRead(MOTOR_PIN2);
       float temperatura = analogRead(TEMPERATURA);
       estado_deslizante = digitalRead(BOTON_DESLIZANTE);
-      bool esPrimo = num_primos(i);
+      bool esPar = num_pares(i);
       CELCIUS();
       if (estado_deslizante == 0){
       	break;
       }
-      if (esPrimo == true){
+      if (esPar == true){
         mostrar_contador(i);
         MOTOR_DERECHA();
         
@@ -130,7 +132,7 @@ void secuencia(int contador, int estado_deslizante, int lectura){
    }
 
 ////////////////////////////////////////
-// FUNCION CON LA UNICA FUNCION DE GIRAR EL MOTOR HACIA EL LADO IZQUIERDO,
+// FUNCION CON LA UNICA FUNCION DE GIRAR HACIA EL LADO IZQUIERDO,
 // LUEGO, DICHA FUNCION SE LLAMA DENTRO DEL BUCLE PARA DARLE 
 // MOVIMIENTO AL MOTOR DEPENDIENDO DE QUE LADO ESTE EL DESLIZANTE
 void MOTOR_IZQUIERDA()
@@ -143,7 +145,7 @@ void MOTOR_IZQUIERDA()
 } 
   
 /////////////////////////////////
-// FUNCION CON LA UNICA FUNCION DE GIRAR EL MOTOR HACIA EL LADO DERECHO,
+// FUNCION CON LA UNICA FUNCION DE GIRAR HACIA EL LADO DERECHO,
 // LUEGO, DICHA FUNCION SE LLAMA DENTRO DEL BUCLE PARA DARLE 
 // MOVIMIENTO AL MOTOR DEPENDIENDO DE QUE LADO ESTE EL DESLIZANTE
 void MOTOR_DERECHA()
@@ -160,18 +162,14 @@ float temperatura_celcius;
 /////////////////////////////
 // LA SIGUIENTE FUNCION LO QUE HACE ES QUE CONVIERTE EL NUMERO DE
 // EL SENSOR DE  TEMPERATURA A CELCIUS Y LUEGO LO PRINTEA
-// POR CONSOLA, TAMBIEN DEPENDIENDO PARA QUE LADO SE ENCUENTRE EL INTERRUPTOR.
-// SE LE AGREGA LA FUNCIONALIDAD DE QUE, CUANDO LA TEMPERATURA SEA MAYOR A 50° NOS ENVIE
-// UNA SEÑAL VISUAL MEDIANTE EL LED Y LA FOTORRESISTENCIA PARA AVISARNOS DE QUE EL PROGRAMA
-// PODRIA TENER DAÑOS POR TRABAJAR A ALTAS TEMPERATURAS, ASI MISMO, LA SEÑAL DE ALERTA ES
-// PRINTEADA POR CONSOLA.
+// POR CONSOLA, TAMBIEN DEPENDIENDO PARA QUE LADO SE ENCUENTRE EL INTERRUPTOR
 void CELCIUS()
 {
   int fotor = analogRead(FOTORRESISTENCIA);
   int lectura = analogRead(TEMPERATURA);
   float temperatura_celcius = map(lectura,20,358,-40,125);
   if (temperatura_celcius > 50){
-    digitalWrite(LED,HIGH);
+    	digitalWrite(LED,HIGH);
   	Serial.print("CUIDADO, LA TEMPERATURA SOBREPASA LOS 50CELCIUS\n");
   	Serial.println("EL SISTEMA PODRIA QUEMARSE");}
     	
@@ -184,10 +182,6 @@ void CELCIUS()
 // LA SIGUIENTE FUNCION LO QUE HACE ES QUE CONVIERTE EL NUMERO DE
 // EL SENSOR DE  TEMPERATURA A FAHRENHEIT Y LUEGO LO PRINTEA
 // POR CONSOLA, TAMBIEN DEPENDIENDO PARA QUE LADO SE ENCUENTRE EL INTERRUPTOR
-// SE LE AGREGA LA FUNCIONALIDAD DE QUE, CUANDO LA TEMPERATURA SEA MAYOR A 122° NOS ENVIE
-// UNA SEÑAL VISUAL MEDIANTE EL LED Y LA FOTORRESISTENCIA PARA AVISARNOS DE QUE EL PROGRAMA
-// PODRIA TENER DAÑOS POR TRABAJAR A ALTAS TEMPERATURAS, ASI MISMO, LA SEÑAL DE ALERTA ES
-// PRINTEADA POR CONSOLA.
 void FAHRENHEIT()
 {
   int lectura = analogRead(TEMPERATURA);
@@ -196,8 +190,8 @@ void FAHRENHEIT()
     digitalWrite(LED,HIGH);
     Serial.print("CUIDADO, LA TEMPERATURA SOBREPASA LOS 122 FAHRENHEIT\n");
   	Serial.println("EL SISTEMA PODRIA QUEMARSE");}
-  else if (temperatura_fahrenheit <122){
-    digitalWrite(LED,LOW);}
+  else if (temperatura_fahrenheit < 122){
+  digitalWrite(LED,LOW);}
   Serial.print("La temperatura en FAHRENHEIT es: ");
   Serial.println(temperatura_fahrenheit);
 
@@ -205,21 +199,11 @@ void FAHRENHEIT()
 ////////////////////////////////////7
 
 //LA SIGUIENTE FUNCION RECORRE EL CONTADOR Y SOLO MUESTRA
-// LOS NUMEROS QUE CUMPLAN CON LA CONDICION DE SER PRIMOS
-bool num_primos(int contador)
+// LOS NUMEROS QUE CUMPLAN CON LA CONDICION DE SER PARES
+bool num_pares(int contador)
 {
-  if (contador <= 1) {
-    return false;
-  }
-
-  for (int i = 2; i <= contador / 2; i++) {
-    if (contador % i == 0) {
-      return false; 
+     return contador%2==0; 
     }
-  }
-  return true;
-  
-}
 
 ////////////////////////////////
 // LA SIGUIENTE FUNCION RECIBE EL CONTADOR COMO PARAMETRO, 
